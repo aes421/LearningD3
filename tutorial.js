@@ -119,3 +119,16 @@ function dynamicSVGSpace(){
 	.style("fill", function (d){ return d.color; }
 	);
 }
+
+function scales(){
+	var initialScaleData = [0, 1000, 3000, 2000, 5000, 4000, 7000, 6000, 9000, 8000, 10000];
+	var newScaledData=[];
+	var min = d3.min(initialScaleData);
+	var max = d3.max(initialScaleData);
+	
+	var linearScale = d3.scaleLinear().domain([min, max]).range([0,100]);
+
+	for (var i = 0; i < initialScaleData.length; i++){
+		newScaledData[i] = linearScale(initialScaleData[i]);
+	}
+}
