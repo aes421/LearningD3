@@ -32,3 +32,30 @@ function svgCoordinateSpace(){
 		else { return "blue"; }
 	});
 }
+
+function JSONModelCircles(){
+	var jsonCircles = [ 
+		{ "x": 30,
+			"y": 20,
+			"r": 20,
+			"color": "green" },
+		{ "x": 70,
+			"y": 70,
+			"r": 20,
+			"color": "purple" },
+		{ "x": 110,
+			"y": 100,
+			"r": 20,
+			"color": "red" }
+	];
+
+	var svgContainer = d3.select("body").append("svg").attr("width", 200).attr("height", 200).style("border", "1px solid black");
+
+	var circles = svgContainer.selectAll("circle").data(jsonCircles).enter().append("circle");
+
+	var circleAttributes = circles.attr("cx", function(d) { return d.x; })
+	.attr("cy", function(d) { return d.y; })
+	.attr("r", function(d) { return d.r; })
+	.style("fill", function (d){ return d.color; }
+	);
+}
