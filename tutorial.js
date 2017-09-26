@@ -61,14 +61,13 @@ function JSONModelCircles(){
 }
 
 function SVGPath(){
-	var lineData = [ { "x": 1,   "y": 5},  { "x": 20,  "y": 20},
-		{ "x": 40,  "y": 10}, { "x": 60,  "y": 40},
-		{ "x": 80,  "y": 5},  { "x": 100, "y": 60}];
+	var lineData = [ { "x": 10,   "y": 25},  { "x": 10,  "y": 75},
+		{ "x": 60,  "y": 75}, { "x": 10,  "y": 25}];
 
 	var lineFunction = d3.line()
 		.x(function(d) { return d.x; })
 		.y(function(d) { return d.y; })
-		.curve(d3.curveStep);
+		.curve(d3.curveLinear);
 
 	var svgContainer = d3.select("body").append("svg").attr("width", 200).attr("height", 200).style("border", "1px solid black");
 
@@ -79,4 +78,44 @@ function SVGPath(){
 								.attr("fill", none);
 
 
+}
+
+function dynamicSVGSpace(){
+	var jsonRects = [ 
+		{   "x": 10,
+			"y": 10,
+			"h": 20,
+			"w": 20,
+			"color": "green" },
+		{ 	"x": 160,
+			"y": 40,
+			"h": 20,
+			"w": 20,
+			"color": "purple" },
+		{ 	"x": 70,
+			"y": 70,
+			"h": 20,
+			"w": 20,
+			"color": "red" }
+	];
+
+	var max_x = 0;
+	var max_y = 0;
+	for (var i = 0; i < jsonRects.length; i++){
+		curr_x = jsonRects[i].x + jsonRects[i].w;
+		curr_y = jsonRects[i].y + jsonRects[i].h;
+		if ( curr_x > max_x) { max_x = curr_x; }
+		if ( curr_y > max_y) { max_y = curr_y; } 
+	}
+
+	var svgContainer = d3.select("body").append("svg").attr("width", max_x + 20).attr("height", max_y + 20).style("border", "1px solid black");
+
+	var rects = svgContainer.selectAll("rect").data(jsonRects).enter().append("rect");
+
+	var rectAttributes = rects.attr("x", function(d) { return d.x; })
+	.attr("y", function(d) { return d.y; })
+	.attr("width", function(d) { return d.w; })
+	.attr("height", function(d) { return d.h; })
+	.style("fill", function (d){ return d.color; }
+	);
 }
