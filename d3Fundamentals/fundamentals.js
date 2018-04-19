@@ -2,6 +2,12 @@ var dataset = [ 25, 7, 5, 26, 11, 8, 25, 14, 23, 19,
     14, 11, 22, 29, 11, 13, 12, 17, 18, 10,
     24, 18, 25, 9, 3];
 
+var dataset2 = [
+    [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
+    [410, 12], [475, 44], [25, 67], [85, 21], [220, 88],
+    [600, 150]
+  ];
+
 function addP(){
     d3.select("body").append("p").text("New paragraph!");
 }
@@ -107,4 +113,79 @@ function createSVGBarChartFromDataset(){
         .attr("font-size", "11px")
         .attr("fill", "white")
         .attr("text-anchor", "middle");
+}
+
+function createAScatterPlot(){
+    let w = 600;
+    let h = 200;
+    let padding = 30;
+
+    var xScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset2, function(d){
+                        return d[0];
+                    })
+                ])
+                .range([padding, w-padding*2]);
+    
+    var yScale = d3.scaleLinear()
+                .domain([0, d3.max(dataset2, function(d){
+                        return d[1];
+                    })
+                ])
+                .range([h-padding,padding]);
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("height", h)
+                .attr("width", w);
+
+    //CHART
+    svg.selectAll("circle")
+        .data(dataset2)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d){
+            return xScale(d[0]);
+        })
+        .attr("cy", function(d){
+            return  yScale(d[1]);
+        })
+        .attr("r", 5);
+
+    //LABELS
+    svg.selectAll("text")
+    .data(dataset2)
+    .enter()
+    .append("text")
+    .text(function(d){
+        return d[0] + "," + d[1];
+    })
+    .attr("x", function(d){
+        return  xScale(d[0]);
+    })
+    .attr("y", function(d){
+        return  yScale(d[1]);
+    })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "11px")
+    .attr("fill", "red");
+
+    //AXIS
+    var xAxis = d3.axisBottom()
+                    .scale(xScale)
+                    .ticks(5);
+
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + (h-padding) + ")")
+        .call(xAxis);
+
+    var yAxis = d3.axisLeft()
+        .scale(yScale)
+        .ticks(5);
+        
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + padding + ",0)")
+        .call(yAxis);
 }
