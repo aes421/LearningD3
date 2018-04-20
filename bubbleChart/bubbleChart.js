@@ -1,8 +1,6 @@
-// var dataset = [ {data: 25}, {data: 15}, {data: 7}, {data: 100}, 
-//     {data: 5}, {data: 29}, {data: 57}, {data: 43}, {data: 79}, 
-//     {data: 88}, {data: 11}, {data: 2},  {data: 20}, {data: 60}];
-
-var dataset = [ {data: 253}, {data: 253}, {data: 253}, {data: 253}];
+var dataset = [ {data: 25}, {data: 15}, {data: 7}, {data: 100}, 
+    {data: 5}, {data: 29}, {data: 57}, {data: 43}, {data: 79}, 
+    {data: 88}, {data: 11}, {data: 2},  {data: 20}, {data: 60}];
 
 function createBubbleChart(){
     let h = w = 900;
