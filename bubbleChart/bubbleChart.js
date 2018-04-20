@@ -20,10 +20,11 @@ function createBubbleChart(){
                         .style("stroke-width", 1);
 
     var simulation = d3.forceSimulation(dataset)
-                        .force("charge", d3.forceManyBody().strength(function(d){
-                            return -d.data;
+                        .force("collision", d3.forceCollide(function(d){
+                            return d.data;
                         }))
                         .force("center", d3.forceCenter(w/2, h/2))
+                        .force("attraction", d3.forceManyBody().strength(30))
                         .on("tick", ticked);
 
     var node = svg.append("g")
