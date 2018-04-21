@@ -1,6 +1,7 @@
 var dataset = [ {data: 25}, {data: 15}, {data: 7}, {data: 100}, 
     {data: 5}, {data: 29}, {data: 57}, {data: 43}, {data: 79}, 
     {data: 88}, {data: 11}, {data: 2},  {data: 20}, {data: 60}];
+//var dataset = [ {data: 100}, {data: 100}, {data: 100}, {data: 100}];
 
 function createBubbleChart(){
     let h = w = 900;
@@ -24,8 +25,8 @@ function createBubbleChart(){
                         .domain([0,d3.max(dataset, function(d){
                             return d.data;
                         //anything lower than 15 is too small
-                        //Math.sqrt((w*h)/(dataset.length * Math.PI))
-                        })]).range([15,100]);
+                        //
+                        })]).range([15,Math.sqrt((w*h)/(dataset.length * Math.PI))]);
 
     var simulation = d3.forceSimulation(dataset)
                         .force("collision", d3.forceCollide(function(d){
