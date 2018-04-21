@@ -13,7 +13,9 @@ function createBubbleChart(){
         dataset.push({id_str:"root", followers_count: 0});
 
         //TODO dynamically determine users
-        let h = w = 900;
+        let padding = 30;
+        let h = window.innerHeight - padding;
+        let w = window.innerWidth - padding;
 
         var svg = d3.select("body")
                     .append("svg")
@@ -31,7 +33,7 @@ function createBubbleChart(){
                             .style("stroke-width", 1);
 
         var pack = d3.pack()
-                    .size([w-5,h-5]);
+                    .size([w-padding,h-padding]);
 
         var root = d3.stratify()
                         .id( function(d){ return d.id_str; })
