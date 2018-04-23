@@ -66,9 +66,11 @@ function createBubbleChart(){
 }
 
 function handleMouseOver(d,i){
+    if (d.id === "root"){ return; }
     this.setAttribute("fill", "orange")
 }
 
 function handleMouseOut(d,i){
+    if (d.id === "root"){ return; }
     this.setAttribute("fill", "white")
 }
