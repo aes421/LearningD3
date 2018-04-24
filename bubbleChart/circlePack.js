@@ -44,19 +44,19 @@ function createBubbleChart(){
         pack(root);
 
         var nodes = svg.selectAll("g")
-        .data(root.descendants())
-        .enter().append("g")
-        .attr("id", function(d, i){ return d.id; })
-        .attr("class", "node")
-        .append("circle")
-        .attr("r", function(d) { return d.r; })
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; })
-        .attr("fill", "white")
-        .attr("stroke", "black")
-        .attr("stroke-width", "2")
-        .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut);
+                        .data(root.descendants())
+                        .enter().append("g")
+                        .attr("id", function(d, i){ return d.id; })
+                        .attr("class", "node")
+                        .append("circle")
+                        .attr("r", function(d) { return d.r; })
+                        .attr("cx", function(d) { return d.x; })
+                        .attr("cy", function(d) { return d.y; })
+                        .attr("fill", "white")
+                        .attr("stroke", "black")
+                        .attr("stroke-width", "2")
+                        .on("mouseover", handleMouseOver)
+                        .on("mouseout", handleMouseOut);
 
         //hide root
         svg.select("circle")
