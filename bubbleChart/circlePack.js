@@ -54,11 +54,23 @@ function createBubbleChart(){
         .attr("cy", function(d) { return d.y; })
         .attr("fill", "white")
         .attr("stroke", "black")
-        .attr("stroke-width", "2");
+        .attr("stroke-width", "2")
+        .on("mouseover", handleMouseOver)
+        .on("mouseout", handleMouseOut);
 
         //hide root
         svg.select("circle")
         .attr("stroke", "white")
         .attr("stroke-width", 0)
     });  
+}
+
+function handleMouseOver(d,i){
+    if (d.id === "root"){ return; }
+    this.setAttribute("fill", "orange")
+}
+
+function handleMouseOut(d,i){
+    if (d.id === "root"){ return; }
+    this.setAttribute("fill", "white")
 }
