@@ -42,7 +42,10 @@ function createBubbleChart(){
                         .sum(function(d){ return d.followers_count });
 
         pack(root);
-        var tip = d3.tip().html(function(d){ return d.r; });
+        //http://bl.ocks.org/Caged/6476579
+        var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .html(function(d){ return d.data.screen_name; });
         svg.call(tip);
 
         var nodes = svg.selectAll("g")
