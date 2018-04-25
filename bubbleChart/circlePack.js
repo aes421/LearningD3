@@ -42,6 +42,8 @@ function createBubbleChart(){
                         .sum(function(d){ return d.followers_count });
 
         pack(root);
+        var tip = d3.tip().html(function(d){ return d.r; });
+        svg.call(tip);
 
         var nodes = svg.selectAll("g")
                         .data(root.descendants())
@@ -55,8 +57,8 @@ function createBubbleChart(){
                         .attr("fill", "white")
                         .attr("stroke", "black")
                         .attr("stroke-width", "2")
-                        .on("mouseover", handleMouseOver)
-                        .on("mouseout", handleMouseOut);
+                        .on("mouseover", handleMouseOver(tip))
+                        .on("mouseout", handleMouseOut(tip));
 
         //hide root
         svg.select("circle")
@@ -65,12 +67,18 @@ function createBubbleChart(){
     });  
 }
 
-function handleMouseOver(d,i){
-    if (d.id === "root"){ return; }
-    this.setAttribute("fill", "orange")
+function handleMouseOver(tip){
+    return function(d,i){
+        if (d.id === "root"){ return; }
+        this.setAttribute("fill", "orange")
+        tip.show(d);
+    }
 }
 
-function handleMouseOut(d,i){
-    if (d.id === "root"){ return; }
-    this.setAttribute("fill", "white")
+function handleMouseOut(tip){
+    return function(d,i){
+        if (d.id === "root"){ return; }
+        this.setAttribute("fill", "white")
+        tip.hide(d);
+    }
 }
