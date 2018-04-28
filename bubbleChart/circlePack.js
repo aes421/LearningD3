@@ -42,21 +42,26 @@ function createBubbleChart(){
                         .sum(function(d){ return d.followers_count });
 
         pack(root);
+        //http://bl.ocks.org/Caged/6476579
+        var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .html(function(d){ return d.data.screen_name; });
+        svg.call(tip);
 
         var nodes = svg.selectAll("g")
-        .data(root.descendants())
-        .enter().append("g")
-        .attr("id", function(d, i){ return d.id; })
-        .attr("class", "node")
-        .append("circle")
-        .attr("r", function(d) { return d.r; })
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; })
-        .attr("fill", "white")
-        .attr("stroke", "black")
-        .attr("stroke-width", "2")
-        .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut);
+                        .data(root.descendants())
+                        .enter().append("g")
+                        .attr("id", function(d, i){ return d.id; })
+                        .attr("class", "node")
+                        .append("circle")
+                        .attr("r", function(d) { return d.r; })
+                        .attr("cx", function(d) { return d.x; })
+                        .attr("cy", function(d) { return d.y; })
+                        .attr("fill", "white")
+                        .attr("stroke", "black")
+                        .attr("stroke-width", "2")
+                        .on("mouseover", handleMouseOver(tip))
+                        .on("mouseout", handleMouseOut(tip));
 
         //hide root
         svg.select("circle")
@@ -65,12 +70,18 @@ function createBubbleChart(){
     });  
 }
 
-function handleMouseOver(d,i){
-    if (d.id === "root"){ return; }
-    this.setAttribute("fill", "orange")
+function handleMouseOver(tip){
+    return function(d,i){
+        if (d.id === "root"){ return; }
+        this.setAttribute("fill", "orange")
+        tip.show(d);
+    }
 }
 
-function handleMouseOut(d,i){
-    if (d.id === "root"){ return; }
-    this.setAttribute("fill", "white")
+function handleMouseOut(tip){
+    return function(d,i){
+        if (d.id === "root"){ return; }
+        this.setAttribute("fill", "white")
+        tip.hide(d);
+    }
 }
